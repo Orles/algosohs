@@ -6,18 +6,30 @@ import styles from './stack.module.css';
 import { Circle } from "../ui/circle/circle";
 import { Stack } from "./stack";
 import { ElementStates } from "../../types/element-states";
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 export const StackPage: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const stackRef = useRef(new Stack<number>());
   const [stackElements, setStackElements] = useState<number[]>([]);
   const [highlightColor, setHighlightColor] = useState<boolean>(false);
+  const [loader, setLoader] = React.useState({
+    add: false,
+    remov: false,
+  });
+  const [disabled, setDisabled] = React.useState({
+    add: false,
+    remov: false,
+    celect: false
+  })
 
   useEffect(() => {
     setStackElements([...stackRef.current.elements]);
   }, []);
 
   const handleAddClick = (e: React.FormEvent<HTMLFormElement>) => {
+    setLoader({...loader, add: true})
+    setDisabled({...disabled, remov: true, celect: true})
     e.preventDefault();
     setHighlightColor(true);
     stackRef.current.push(Number(inputValue));
@@ -25,7 +37,18 @@ export const StackPage: React.FC = () => {
     setInputValue('');
     setTimeout(() => {
       setHighlightColor(false);
-    }, 500);
+      setLoader({...loader, add: false})
+      setDisabled({...disabled, remov: false, celect: false})
+    }, SHORT_DELAY_IN_MS);
+  };
+
+  const INPUT_PROPS = {
+    isLimitText: true,
+    type: "text",
+    maxLength: 4,
+    value: inputValue,
+    extraClass: "styles.input", // Замените на ваш класс из styles
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.currentTarget.value),
   };
 
   return (
@@ -38,21 +61,23 @@ export const StackPage: React.FC = () => {
         }
       }}>
         <div className={styles.container}>
-          <Input isLimitText type="text" maxLength={4} value={inputValue} extraClass={styles.input} onChange={(e) => {
-            setInputValue(e.currentTarget.value);
-          }} />
+          <Input {...INPUT_PROPS} />
 
-          <Button disabled={inputValue === '' ? true : false} type="submit" text="Добавить" />
-          <Button disabled={stackElements.length === 0 ? true : false} text="Удалить" onClick={() => {
+          <Button disabled={inputValue === '' || disabled.add ? true : false} type="submit" text="Добавить" isLoader={loader.add}/>
+          <Button disabled={stackElements.length === 0 || disabled.remov ? true : false} text="Удалить" isLoader={loader.remov} onClick={() => {
+            setLoader({...loader, remov: true})
+            setDisabled({...disabled, add: true, celect: true})
             stackRef.current.pop();
             setStackElements([...stackRef.current.elements]);
             setHighlightColor(true);
             setTimeout(() => {
               setHighlightColor(false);
-            }, 500);
+              setLoader({...loader, remov: false})
+              setDisabled({...disabled, remov: false, celect: false})
+            }, SHORT_DELAY_IN_MS);
           }} />
         </div>
-        <Button disabled={stackElements.length === 0 ? true : false} text="Очистить" onClick={() => {
+        <Button disabled={stackElements.length === 0 || disabled.celect ? true : false} text="Очистить" onClick={() => {
           stackRef.current.clear();
           setStackElements([...stackRef.current.elements]);
         }} />

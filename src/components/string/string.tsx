@@ -5,6 +5,7 @@ import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { ElementStates } from '../../types/element-states'
 import style from "./string.module.css";
+import { DELAY_IN_MS } from "../../constants/delays";
 
 export const StringComponent: React.FC = () => {
   const [value, setValue] = React.useState('');
@@ -32,7 +33,7 @@ export const StringComponent: React.FC = () => {
     if (currentIndex <= Math.floor(arr.length / 2)) {
       const timeoutId = setTimeout(() => {
         nextStep();
-      }, 1000);
+      }, DELAY_IN_MS);
       return () => clearTimeout(timeoutId);
     }
   }, [currentIndex, arr]);
@@ -44,6 +45,14 @@ export const StringComponent: React.FC = () => {
     setValue('');
     setCurrentIndex(0);
     setCompleted(false)
+  };
+
+  const INPUT_PROPS = {
+    isLimitText: true,
+    type: "text",
+    maxLength: 11,
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value),
+    value: value,
   };
 
   const setState = (index: number) => {
@@ -63,7 +72,7 @@ export const StringComponent: React.FC = () => {
   return (
     <SolutionLayout title="Строка">
       <form className={style.form} onSubmit={e => onSubmit(e)}>
-        <Input isLimitText type="text" onChange={e => setValue(e.currentTarget.value)} value={value} maxLength={11}></Input>
+        <Input {...INPUT_PROPS}></Input>
         <Button text="Развернуть" type="submit" disabled={value === '' ? true : false} isLoader={loader} />
       </form>
       <div className={style.container}>

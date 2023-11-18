@@ -6,6 +6,7 @@ import { Direction } from "../../types/direction";
 import { Column } from "../ui/column/column";
 import { ElementStates } from "../../types/element-states";
 import styles from './sorting.module.css';
+import { DELAY_IN_MS } from "../../constants/delays";
 
 export const SortingPage: React.FC = () => {
   const [elements, setElements] = useState<{ value: number; status: ElementStates }[]>([]);
@@ -46,11 +47,11 @@ export const SortingPage: React.FC = () => {
       let min = i;
       array[min].status = ElementStates.Changing;
       setElements([...array]);
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, DELAY_IN_MS));
       for (let j = i + 1; j < array.length; j++) {
         array[j].status = ElementStates.Changing;
         setElements([...array]);
-        await new Promise((resolve) => setTimeout(resolve, 100));
+        await new Promise((resolve) => setTimeout(resolve, DELAY_IN_MS));
         if (
           (type === 'ascending' && array[j].value < array[min].value) ||
           (type === 'descending' && array[j].value > array[min].value)
@@ -78,7 +79,7 @@ export const SortingPage: React.FC = () => {
         array[j].status = ElementStates.Changing;
         array[j + 1].status = ElementStates.Changing;
         setElements([...array]);
-        await new Promise((resolve) => setTimeout(resolve, 100));
+        await new Promise((resolve) => setTimeout(resolve, DELAY_IN_MS));
         if (
           (type === 'ascending' && array[j].value > array[j + 1].value) ||
           (type === 'descending' && array[j].value < array[j + 1].value)
