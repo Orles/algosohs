@@ -6,6 +6,7 @@ import { Circle } from "../ui/circle/circle";
 import { ElementStates } from '../../types/element-states'
 import style from "./string.module.css";
 import { DELAY_IN_MS } from "../../constants/delays";
+import { MAX_LENGTH_11 } from "../../constants/numbers";
 
 export const StringComponent: React.FC = () => {
   const [value, setValue] = React.useState('');
@@ -47,14 +48,6 @@ export const StringComponent: React.FC = () => {
     setCompleted(false)
   };
 
-  const INPUT_PROPS = {
-    isLimitText: true,
-    type: "text",
-    maxLength: 11,
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value),
-    value: value,
-  };
-
   const setState = (index: number) => {
     if (completed) {
       return ElementStates.Modified;
@@ -72,7 +65,7 @@ export const StringComponent: React.FC = () => {
   return (
     <SolutionLayout title="Строка">
       <form className={style.form} onSubmit={e => onSubmit(e)}>
-        <Input {...INPUT_PROPS}></Input>
+      <Input isLimitText type="text" onChange={e => setValue(e.currentTarget.value)} value={value} maxLength={MAX_LENGTH_11} />
         <Button text="Развернуть" type="submit" disabled={value === '' ? true : false} isLoader={loader} />
       </form>
       <div className={style.container}>

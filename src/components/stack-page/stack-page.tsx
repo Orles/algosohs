@@ -7,6 +7,7 @@ import { Circle } from "../ui/circle/circle";
 import { Stack } from "./stack";
 import { ElementStates } from "../../types/element-states";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
+import { MAX_LENGTH_4 } from "../../constants/numbers";
 
 export const StackPage: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
@@ -42,15 +43,6 @@ export const StackPage: React.FC = () => {
     }, SHORT_DELAY_IN_MS);
   };
 
-  const INPUT_PROPS = {
-    isLimitText: true,
-    type: "text",
-    maxLength: 4,
-    value: inputValue,
-    extraClass: "styles.input", // Замените на ваш класс из styles
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.currentTarget.value),
-  };
-
   return (
     <SolutionLayout title="Стек">
       <form className={styles.content} onSubmit={(e) => {
@@ -61,8 +53,9 @@ export const StackPage: React.FC = () => {
         }
       }}>
         <div className={styles.container}>
-          <Input {...INPUT_PROPS} />
-
+        <Input isLimitText type="text" maxLength={MAX_LENGTH_4} value={inputValue} extraClass={styles.input} onChange={(e) => {
+            setInputValue(e.currentTarget.value);
+          }} />
           <Button disabled={inputValue === '' || disabled.add ? true : false} type="submit" text="Добавить" isLoader={loader.add}/>
           <Button disabled={stackElements.length === 0 || disabled.remov ? true : false} text="Удалить" isLoader={loader.remov} onClick={() => {
             setLoader({...loader, remov: true})
@@ -82,7 +75,6 @@ export const StackPage: React.FC = () => {
           setStackElements([...stackRef.current.elements]);
         }} />
       </form>
-
       <div className={styles.bubble}>
         {stackElements.map((item, index) => (
           <Circle

@@ -8,6 +8,7 @@ import { Circle } from "../ui/circle/circle";
 import { ArrowIcon } from "../ui/icons/arrow-icon";
 import { ElementStates } from "../../types/element-states";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
+import { MAX_LENGTH_4 } from "../../constants/numbers";
 
 
 interface ITmp {
@@ -262,23 +263,11 @@ export const ListPage: React.FC = () => {
 
   const inputIndexDisabled = buttonsLoader.addHead || buttonsLoader.addTail || buttonsLoader.addIndex || buttonsLoader.deleteIndex || buttonsLoader.deleteHead || buttonsLoader.deleteTail
 
-  const INPUT_PROPS = {
-    disabled: inputValueDisabled,
-    isLimitText: true,
-    type: "text",
-    maxLength: 4,
-    extraClass: "styles.input", // Замените на ваш класс из styles
-    placeholder: "Введите значение",
-    value: value,
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value),
-  };
-
-
   return (
     <SolutionLayout title="Связный список">
       <div className={styles.container}>
         <form className={styles.enter_value}>
-          <Input {...INPUT_PROPS} />
+        <Input disabled={inputValueDisabled} isLimitText type="text" maxLength={MAX_LENGTH_4} extraClass={styles.input} placeholder="Введите значение" value={value} onChange={(e) => {setValue(e.currentTarget.value)}} />
           <div className={styles.buttons_value}>
             <Button extraClass={styles.button_value} isLoader={buttonsLoader.addHead} disabled={value === '' ? true : disabled.addHead} onClick={() => {
               addToHead()
