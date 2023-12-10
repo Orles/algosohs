@@ -1,0 +1,53 @@
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.enter_value {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.enter_index {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.input {
+    width: 204px;
+}
+
+.buttons_value {
+    display: flex;
+    gap: 12px;
+}
+
+.buttons_index {
+    display: flex;
+    gap: 12px;
+}
+
+.button_value {
+    width: 175px;
+}
+
+.button_index {
+    width: 362px;
+}
+
+.bubble {
+    padding-top: 120px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+.list{
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
