@@ -8,7 +8,12 @@ import { ElementStates } from "../../types/element-states";
 import styles from './sorting.module.css';
 import { DELAY_IN_MS } from "../../constants/delays";
 
-export const SortingPage: React.FC = () => {
+interface ISortingPage {
+  minLength?: number;
+  maxLength?: number;
+}
+
+export const SortingPage: React.FC<ISortingPage> = ({minLength=3, maxLength=15}) => {
   const [elements, setElements] = useState<{ value: number; status: ElementStates }[]>([]);
   const [selectedType, setSelectedType] = useState<string>('select');
   const [loader, setLoader] = React.useState({
@@ -26,7 +31,7 @@ export const SortingPage: React.FC = () => {
   };
 
   const generateRandomArray = () => {
-    const length = Math.floor(Math.random() * 15) + 3;
+    const length = Math.floor(Math.random() * maxLength) + minLength;
     const min = 0;
     const max = 100;
     const newArray = [];
@@ -109,7 +114,7 @@ export const SortingPage: React.FC = () => {
           <RadioInput checked={selectedType === 'bubble'} label="Пузырёк" name="sortingType" value='bubble' onChange={handleRadioChange} />
         </div>
         <div className={styles.sorting}>
-          <Button isLoader={loader.ascending} disabled={disabled.ascending} sorting={Direction.Ascending} text="По возростанию" onClick={() => {
+          <Button data-testid='ascending' isLoader={loader.ascending} disabled={disabled.ascending} sorting={Direction.Ascending} text="По возростанию" onClick={() => {
             setDisabled({...disabled, descending: true, newArray: true})
             setLoader({...loader, ascending: true})
             if (selectedType === 'select') {
@@ -118,7 +123,7 @@ export const SortingPage: React.FC = () => {
               sortBubble('ascending');
             }
           }} />
-          <Button isLoader={loader.descending} disabled={disabled.descending} sorting={Direction.Descending} text="По убыванию" onClick={() => {
+          <Button data-testid='descending' isLoader={loader.descending} disabled={disabled.descending} sorting={Direction.Descending} text="По убыванию" onClick={() => {
           setDisabled({...disabled, ascending: true, newArray: true})
           setLoader({...loader, descending: true})
           if (selectedType === 'select') {
