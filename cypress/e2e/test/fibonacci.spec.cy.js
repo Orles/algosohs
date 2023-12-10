@@ -1,6 +1,9 @@
+const { CIRCLE } = require('../../../src/constants/element-captions.ts');
+const {LOCAL_HOST} = require('../../../src/constants/element-captions.ts');
+
 describe('Фибоначчи', () => {
     beforeEach(() => {
-       cy.visit('http://localhost:3000/fibonacci');
+       cy.visit(`${LOCAL_HOST}/fibonacci`);
        cy.get('input[type="number"]').as('input');
        cy.get('button[type="submit"]').as('button');
     })
@@ -13,13 +16,13 @@ describe('Фибоначчи', () => {
    it('Проверьте, что числа генерируются корректно', () => {
     cy.get('@input').type(5)
     cy.get('@button').click()
-    cy.get('[data-testid="circle"]').as('circle')
+    cy.get(CIRCLE).as('circle')
     cy.get('@circle').eq(0).should('have.text', '1')
     cy.wait(500)
     cy.get('@circle').eq(1).should('have.text', '1')
     cy.wait(500)
     cy.get('@circle').eq(2).should('have.text', '2')
-    cy.wait(500)
+    cy.wait(500) 
     cy.get('@circle').eq(3).should('have.text', '3')
     cy.wait(500)
     cy.get('@circle').eq(4).should('have.text', '5')

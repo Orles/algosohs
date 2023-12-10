@@ -6,10 +6,6 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.4.0",
-    "@types/node": "^16.11.22",
-    "@types/react": "^17.0.39",
-    "@types/react-dom": "^17.0.11",
     "nanoid": "^3.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -24,6 +20,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "cypress": "cypress open cache clear",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -45,6 +42,10 @@
     ]
   },
   "devDependencies": {
+    "@types/jest": "^27.4.0",
+    "@types/node": "^16.11.22",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.11",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-test-renderer": "^18.0.7",
     "cypress": "^13.5.1",

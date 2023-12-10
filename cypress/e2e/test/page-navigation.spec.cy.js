@@ -1,23 +1,25 @@
+const {LOCAL_HOST} = require('../../../src/constants/element-captions.ts');
+
 describe('Тестирование переходов по страницам', function() {
     it('Домашняя страница', () => {
-      cy.visit('http://localhost:3000');
+      cy.visit(`${LOCAL_HOST}`);
     });
     it('Строка', () => {
-      cy.visit('http://localhost:3000/recursion')
+      cy.visit(`${LOCAL_HOST}/recursion`)
     })
     it('Фибоначчи', () => {
-      cy.visit('http://localhost:3000/fibonacci')
+      cy.visit(`${LOCAL_HOST}/fibonacci`)
     })
     it('Сортировка', () => {
-      cy.visit('http://localhost:3000/sorting')
+      cy.visit(`${LOCAL_HOST}/sorting`)
     })
     it('Стек', () => {
-      cy.visit('http://localhost:3000/stack')
+      cy.visit(`${LOCAL_HOST}/stack`)
     })
     it('Очередь', () => {
-      cy.visit('http://localhost:3000/queue')
+      cy.visit(`${LOCAL_HOST}/queue`)
     })
     it('Список', () => {
-      cy.visit('http://localhost:3000/list')
+      cy.visit(`${LOCAL_HOST}/list`)
     })
   });
