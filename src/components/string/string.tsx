@@ -66,7 +66,7 @@ export const StringComponent: React.FC = () => {
     <SolutionLayout title="Строка">
       <form className={style.form} onSubmit={e => onSubmit(e)}>
       <Input isLimitText type="text" onChange={e => setValue(e.currentTarget.value)} value={value} maxLength={MAX_LENGTH_11} />
-        <Button text="Развернуть" type="submit" disabled={value === '' ? true : false} isLoader={loader} />
+        <Button data-testid={'button'} text="Развернуть" type="submit" disabled={value === '' ? true : false} isLoader={loader} />
       </form>
       <div className={style.container}>
       {arr.map((item, index) => {
